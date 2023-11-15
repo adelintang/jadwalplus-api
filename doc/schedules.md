@@ -17,7 +17,6 @@
 }
 ```
 
-
 ### Get All Schedules
 
 Endpoint : /api/v1/schedules
@@ -82,7 +81,6 @@ Ketika accessToken tidak valid
   }
 }
 ```
-
 
 ### Get Schedule
 
@@ -153,7 +151,6 @@ Ketika schedule tidak di temukan
   }
 }
 ```
-
 
 ### Add Schedule
 
@@ -238,7 +235,6 @@ Ketika body request kosong
 }
 ```
 
-
 ### Delete Schedule
 
 Endpoint : /api/v1/schedules/:id
@@ -303,7 +299,6 @@ Ketika schedule tidak ada
 }
 ```
 
-
 ### Finished Schedule
 
 Endpoint : /api/v1/schedules/:id
@@ -367,12 +362,11 @@ Ketika schedule tidak ada
 }
 ```
 
-
 ### Update Schedule
 
 Endpoint : /api/v1/schedules/:id
 
-Method : PATCH
+Method : PUT
 
 **Headers**
 
