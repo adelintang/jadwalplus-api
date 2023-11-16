@@ -22,7 +22,7 @@ const schedules = new Schema({
     required: true,
   },
   userId: {
-    type: Boolean,
+    type: String,
     required: true,
   },
 });
