@@ -325,6 +325,17 @@ Ketika password lama tidak cocok
 }
 ```
 
+Ketika user tidak ditemukan
+
+- status code : 404
+
+```
+{
+  status: 'fail',
+  message: 'User tidak ditemukan'
+}
+```
+
 **Response Success**
 
 - status code : 200

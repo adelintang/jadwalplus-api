@@ -5,15 +5,11 @@ const schedules = new Schema({
     type: String,
     required: true,
   },
-  datetime: {
+  dateTime: {
     type: String,
     required: true,
   },
   finished: {
-    type: Boolean,
-    required: true,
-  },
-  rightToday: {
     type: Boolean,
     required: true,
   },

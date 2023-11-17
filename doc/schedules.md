@@ -12,8 +12,8 @@
   schedule: string,
   dateTime: string,
   finished: boolean,
-  rightToday: boolean,
-  createdAt: string
+  createdAt: string,
+  userId: string
 }
 ```
 
@@ -66,7 +66,6 @@ Ketika accessToken tidak valid
         schedule: 'Rapat BEM',
         dateTime: '2023-11-14T14:00:10.690Z',
         finished: false,
-        rightToday: true,
         createdAt: '2023-11-14T14:00:10.690Z'
       },
       {
@@ -74,7 +73,6 @@ Ketika accessToken tidak valid
         schedule: 'Mengerjakan tugas kalkulus',
         dateTime: '2023-11-14T14:00:10.690Z',
         finished: false,
-        rightToday: true,
         createdAt: '2023-11-14T14:00:10.690Z'
       }
     ]
@@ -172,6 +170,7 @@ Method : POST
 }
 ```
 
+
 ```
 {
   schedule: 'Rapat BEM',
@@ -228,7 +227,6 @@ Ketika body request kosong
       schedule: 'Rapat BEM',
       dateTime: '2023-11-14T14:00:10.690Z',
       finished: false,
-      rightToday: true,
       createdAt: '2023-11-14T14:00:10.690Z'
     }
   }
@@ -386,6 +384,7 @@ Method : PUT
 }
 ```
 
+
 ```
 {
   schedule: 'Rapat BEM',
@@ -442,7 +441,6 @@ Ketika schedule tidak ada
       schedule: 'Rapat BEM',
       dateTime: '2023-11-14T14:00:10.690Z',
       finished: false,
-      rightToday: true,
       createdAt: '2023-11-14T14:00:10.690Z'
     }
   }
