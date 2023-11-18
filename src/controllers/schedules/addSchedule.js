@@ -1,10 +1,22 @@
 import response from '../../helpers/response.js';
 import Schedules from '../../models/schedules.js';
+import Users from '../../models/users.js';
 
 const addSchedule = async (req, res) => {
   try {
     const { userId } = req.user;
     const { schedule, dateTime } = req.body;
+
+    const user = await Users.findById(userId);
+
+    if (user?.id !== userId) {
+      return response({
+        statusCode: 403,
+        status: 'fail',
+        message: 'Akses tidak diperbolehkan',
+        res,
+      });
+    }
 
     if (!schedule || !dateTime) {
       return response({

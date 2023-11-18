@@ -143,7 +143,6 @@ Ketika schedule tidak di temukan
       schedule: 'Rapat BEM',
       dateTime: '2023-11-14T14:00:10.690Z',
       finished: false,
-      rightToday: true,
       createdAt: '2023-11-14T14:00:10.690Z'
     }
   }
@@ -169,7 +168,6 @@ Method : POST
   dateTime: string (string)
 }
 ```
-
 
 ```
 {
@@ -383,7 +381,6 @@ Method : PUT
   dateTime: string (require)
 }
 ```
-
 
 ```
 {

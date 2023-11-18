@@ -1,4 +1,5 @@
 import Users from '../../models/users.js';
+import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
 
 const deleteUser = async (req, res) => {
@@ -15,6 +16,8 @@ const deleteUser = async (req, res) => {
         res,
       });
     }
+
+    await Schedules.deleteMany({ userId });
 
     return response({
       statusCode: 200,

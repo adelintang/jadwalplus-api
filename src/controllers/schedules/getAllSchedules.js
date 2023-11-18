@@ -9,7 +9,18 @@ const getAllSchedules = async (req, res) => {
 
     const user = await Users.findById(userId);
 
-    if (user.id !== userId) {
+    if (user?.id !== userId) {
+      return response({
+        statusCode: 403,
+        status: 'fail',
+        message: 'Akses tidak diperbolehkan',
+        res,
+      });
+    }
+
+    const validScheduleUser = await Schedules.find({ userId });
+
+    if (!validScheduleUser) {
       return response({
         statusCode: 403,
         status: 'fail',
