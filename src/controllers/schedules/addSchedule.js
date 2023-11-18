@@ -56,7 +56,7 @@ const addSchedule = async (req, res) => {
     });
   } catch (error) {
     return response({
-      statusCode: 401,
+      statusCode: 400,
       status: 'fail',
       message: error.message,
       res,

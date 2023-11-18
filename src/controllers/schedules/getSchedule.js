@@ -20,13 +20,8 @@ const getSchedule = async (req, res) => {
 
     const validScheduleUser = await Schedules.findOne({ _id: id, userId });
 
-    if (validScheduleUser) {
-      return response({
-        statusCode: 403,
-        status: 'fail',
-        message: 'Akses tidak diperbolehkan',
-        res,
-      });
+    if (!validScheduleUser) {
+      throw Error();
     }
 
     const schedule = await Schedules.findOne({ _id: id });
