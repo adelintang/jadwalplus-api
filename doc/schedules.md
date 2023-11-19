@@ -169,6 +169,7 @@ Method : POST
 }
 ```
 
+
 ```
 {
   schedule: 'Rapat BEM',
@@ -382,6 +383,7 @@ Method : PUT
 }
 ```
 
+
 ```
 {
   schedule: 'Rapat BEM',
@@ -413,6 +415,17 @@ Ketika accessToken tidak valid
 }
 ```
 
+Ketika body request kosong
+
+- status code : 400
+
+```
+{
+  status: 'fail',
+  message: 'Gagal Update Schedule. Data yang dimasukkan tidak lengkap'
+}
+```
+
 Ketika schedule tidak ada
 
 - status code : 404
@@ -433,7 +446,7 @@ Ketika schedule tidak ada
   status: 'success',
   message: 'Schedule berhasil diperbarui',
   data: {
-    schedules: {
+    schedule: {
       id: 'bsdhbcj566363',
       schedule: 'Rapat BEM',
       dateTime: '2023-11-14T14:00:10.690Z',
