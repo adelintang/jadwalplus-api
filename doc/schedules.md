@@ -23,6 +23,10 @@ Endpoint : /api/v1/schedules
 
 Method : GET
 
+**query params**
+
+- schedule
+
 **Headers**
 
 - Content-Type: application/json
