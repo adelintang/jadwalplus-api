@@ -1,6 +1,7 @@
 import response from '../../helpers/response.js';
 import Schedules from '../../models/schedules.js';
 import Users from '../../models/users.js';
+import { scheduleSchema } from '../../helpers/validator/schema.js';
 
 const addSchedule = async (req, res) => {
   try {
@@ -18,11 +19,13 @@ const addSchedule = async (req, res) => {
       });
     }
 
-    if (!schedule || !dateTime) {
+    const validationResult = scheduleSchema.validate({ schedule, dateTime });
+
+    if (validationResult.error) {
       return response({
         statusCode: 400,
         status: 'fail',
-        message: 'Gagal menambahkan schedule. Data yang dimasukkan tidak lengkap',
+        message: validationResult.error.message,
         res,
       });
     }

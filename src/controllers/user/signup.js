@@ -1,16 +1,19 @@
 import bcrypt from 'bcrypt';
 import Users from '../../models/users.js';
 import response from '../../helpers/response.js';
+import { signupSchema } from '../../helpers/validator/schema.js';
 
 const signup = async (req, res) => {
   try {
     const { email, username, password } = req.body;
 
-    if (!email || !username || !password) {
+    const validationResult = signupSchema.validate({ email, username, password });
+
+    if (validationResult.error) {
       return response({
         statusCode: 400,
         status: 'fail',
-        message: 'Gagal mendaftar. Data yang di masukkan tidak lengkap',
+        message: validationResult.error.message,
         res,
       });
     }

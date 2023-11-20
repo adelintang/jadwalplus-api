@@ -2,16 +2,19 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import response from '../../helpers/response.js';
 import Users from '../../models/users.js';
+import { signinSchema } from '../../helpers/validator/schema.js';
 
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    if (!email || !password) {
+    const validationResult = signinSchema.validate({ email, password });
+
+    if (validationResult.error) {
       return response({
         statusCode: 400,
         status: 'fail',
-        message: 'Gagal masuk. Data yang di masukkan tidak lengkap',
+        message: validationResult.error.message,
         res,
       });
     }

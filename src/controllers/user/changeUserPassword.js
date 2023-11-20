@@ -1,17 +1,20 @@
 import bcrypt from 'bcrypt';
 import Users from '../../models/users.js';
 import response from '../../helpers/response.js';
+import { changeUserPasswordSchema } from '../../helpers/validator/schema.js';
 
 const changeUserPassword = async (req, res) => {
   try {
     const { userId } = req.user;
     const { oldPassword, newPassword } = req.body;
 
-    if (!oldPassword || !newPassword) {
+    const validationResult = changeUserPasswordSchema.validate({ oldPassword, newPassword });
+
+    if (validationResult.error) {
       return response({
         statusCode: 400,
         status: 'fail',
-        message: 'Gagal ubah password. Data yang dimasukkan tidak lengkap',
+        message: validationResult.error.message,
         res,
       });
     }
