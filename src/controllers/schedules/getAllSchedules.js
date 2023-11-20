@@ -6,6 +6,7 @@ import filteredSchedules from '../../helpers/filteredShedules.js';
 const getAllSchedules = async (req, res) => {
   try {
     const { userId } = req.user;
+    const { search } = req.query;
 
     const user = await Users.findById(userId);
 
@@ -25,6 +26,21 @@ const getAllSchedules = async (req, res) => {
         statusCode: 403,
         status: 'fail',
         message: 'Akses tidak diperbolehkan',
+        res,
+      });
+    }
+
+    if (search) {
+      const query = new RegExp(search, 'i');
+      const searchSchedulesDB = await Schedules.find({ schedule: query, userId });
+      const searchSchedules = filteredSchedules(searchSchedulesDB);
+
+      return response({
+        statusCode: 200,
+        status: 'success',
+        data: {
+          searchSchedules,
+        },
         res,
       });
     }

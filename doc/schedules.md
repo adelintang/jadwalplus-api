@@ -25,7 +25,7 @@ Method : GET
 
 **query params**
 
-- schedule
+- schedule (optional)
 
 **Headers**
 
@@ -57,6 +57,36 @@ Ketika accessToken tidak valid
 ```
 
 **Response Success**
+
+Ketika ada query params
+
+- status code : 200
+
+```
+{
+  status: 'success',
+  data: {
+    schedules: [
+      {
+        id: 'bsdhbcj566363',
+        schedule: 'nobar bola',
+        dateTime: '2023-11-14T14:00:10.690Z',
+        finished: false,
+        createdAt: '2023-11-14T14:00:10.690Z'
+      },
+       {
+        id: 'bsdhbcj566363',
+        schedule: 'nobar volly',
+        dateTime: '2023-11-14T14:00:10.690Z',
+        finished: false,
+        createdAt: '2023-11-14T14:00:10.690Z'
+      }  
+    ]
+  }
+}
+```
+
+Ketika query params kosong
 
 - status code : 200
 
@@ -172,7 +202,6 @@ Method : POST
   dateTime: string (string)
 }
 ```
-
 
 ```
 {
@@ -386,7 +415,6 @@ Method : PUT
   dateTime: string (require)
 }
 ```
-
 
 ```
 {

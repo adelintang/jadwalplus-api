@@ -4,6 +4,7 @@ const schedules = new Schema({
   schedule: {
     type: String,
     required: true,
+    index: true,
   },
   dateTime: {
     type: String,
