@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import response from '../../helpers/response.js';
-import Users from '../../models/users.js';
+import { getUserByEmail } from '../../services/user/UserService.js';
 import { signinSchema } from '../../helpers/validator/schema.js';
 
 const signin = async (req, res) => {
@@ -19,7 +19,7 @@ const signin = async (req, res) => {
       });
     }
 
-    const foundUser = await Users.findOne({ email });
+    const foundUser = await getUserByEmail(email);
 
     if (!foundUser) {
       return response({

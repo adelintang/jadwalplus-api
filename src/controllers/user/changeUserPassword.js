@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import Users from '../../models/users.js';
+import { getUserById, updatedUserPasswordById } from '../../services/user/UserService.js';
 import response from '../../helpers/response.js';
 import { changeUserPasswordSchema } from '../../helpers/validator/schema.js';
 
@@ -19,7 +19,7 @@ const changeUserPassword = async (req, res) => {
       });
     }
 
-    const foundUser = await Users.findOne({ _id: userId });
+    const foundUser = await getUserById(userId);
 
     if (!foundUser) {
       return response({
@@ -41,11 +41,7 @@ const changeUserPassword = async (req, res) => {
       });
     }
 
-    const hashNewPassword = await bcrypt.hash(newPassword, 10);
-
-    const updatedPassword = await Users.updateOne({ _id: userId }, {
-      $set: { password: hashNewPassword },
-    });
+    const updatedPassword = await updatedUserPasswordById(userId, newPassword);
 
     if (!updatedPassword.modifiedCount) {
       return response({

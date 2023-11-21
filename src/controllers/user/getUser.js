@@ -1,11 +1,11 @@
-import Users from '../../models/users.js';
+import { getUserById } from '../../services/user/UserService.js';
 import response from '../../helpers/response.js';
 
 const getUser = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const user = await Users.findOne({ _id: userId });
+    const user = await getUserById(userId);
 
     if (!user) {
       return response({

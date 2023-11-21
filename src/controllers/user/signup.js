@@ -1,5 +1,4 @@
-import bcrypt from 'bcrypt';
-import Users from '../../models/users.js';
+import { getUserByEmail, getUserByUsername, addUser } from '../../services/user/UserService.js';
 import response from '../../helpers/response.js';
 import { signupSchema } from '../../helpers/validator/schema.js';
 
@@ -18,9 +17,9 @@ const signup = async (req, res) => {
       });
     }
 
-    const foundDuplicateEmail = await Users.findOne({ email });
+    const foundDuplicatEmail = await getUserByEmail(email);
 
-    if (foundDuplicateEmail) {
+    if (foundDuplicatEmail) {
       return response({
         statusCode: 409,
         status: 'fail',
@@ -29,7 +28,7 @@ const signup = async (req, res) => {
       });
     }
 
-    const foundDuplicateUsername = await Users.findOne({ username });
+    const foundDuplicateUsername = await getUserByUsername(username);
 
     if (foundDuplicateUsername) {
       return response({
@@ -40,15 +39,7 @@ const signup = async (req, res) => {
       });
     }
 
-    const hashPassword = await bcrypt.hash(password, 10);
-
-    const user = new Users({
-      email,
-      username,
-      password: hashPassword,
-    });
-
-    await user.save();
+    await addUser({ email, username, password });
 
     return response({
       statusCode: 201,

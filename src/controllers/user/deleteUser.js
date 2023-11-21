@@ -1,4 +1,4 @@
-import Users from '../../models/users.js';
+import { deleteUserById } from '../../services/user/UserService.js';
 import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
 
@@ -6,7 +6,7 @@ const deleteUser = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const user = await Users.deleteOne({ _id: userId });
+    const user = await deleteUserById(userId);
 
     if (user.deletedCount === 0) {
       return response({
