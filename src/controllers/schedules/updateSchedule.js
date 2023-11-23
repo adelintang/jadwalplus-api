@@ -2,6 +2,7 @@ import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
 import Users from '../../models/users.js';
 import { scheduleSchema } from '../../helpers/validator/schema.js';
+import { updatedScheduleById } from '../../services/schedules/schedules.js';
 
 const updateSchedule = async (req, res) => {
   try {
@@ -37,9 +38,7 @@ const updateSchedule = async (req, res) => {
       });
     }
 
-    const updatedSchedule = await Schedules.findByIdAndUpdate(id, {
-      $set: { schedule, dateTime },
-    }, { new: true });
+    const updatedSchedule = await updatedScheduleById({ id, schedule, dateTime });
 
     return response({
       statusCode: 200,
