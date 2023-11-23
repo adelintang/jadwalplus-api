@@ -30,11 +30,13 @@ const getSchedule = async (req, res) => {
       statusCode: 200,
       status: 'success',
       data: {
-        id: schedule.id,
-        schedule: schedule.schedule,
-        dateTime: schedule.dateTime,
-        finished: schedule.finished,
-        createdAt: schedule.createdAt,
+        schedule: {
+          id: schedule.id,
+          schedule: schedule.schedule,
+          dateTime: schedule.dateTime,
+          finished: schedule.finished,
+          createdAt: schedule.createdAt,
+        },
       },
       res,
     });

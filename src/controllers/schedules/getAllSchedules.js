@@ -39,7 +39,7 @@ const getAllSchedules = async (req, res) => {
         statusCode: 200,
         status: 'success',
         data: {
-          searchSchedules,
+          schedules: searchSchedules,
         },
         res,
       });
