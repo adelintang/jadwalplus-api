@@ -20,8 +20,10 @@ const getUser = async (req, res) => {
       statusCode: 200,
       status: 'success',
       data: {
-        email: user.email,
-        username: user.username,
+        user: {
+          email: user.email,
+          username: user.username,
+        },
       },
       res,
     });

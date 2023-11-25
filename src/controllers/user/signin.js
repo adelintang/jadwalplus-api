@@ -23,7 +23,7 @@ const signin = async (req, res) => {
 
     if (!foundUser) {
       return response({
-        statusCode: 401,
+        statusCode: 400,
         status: 'fail',
         message: 'Gagal masuk. Email atau Password salah',
         res,
@@ -34,7 +34,7 @@ const signin = async (req, res) => {
 
     if (!isPasswordMatch) {
       return response({
-        statusCode: 401,
+        statusCode: 400,
         status: 'fail',
         message: 'Gagal masuk. Email atau Password salah',
         res,

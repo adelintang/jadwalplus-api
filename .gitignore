@@ -1,3 +1,4 @@
 node_modules/
 .env
 jadwalplus-api.postman_collection.json
+jadwalplus-api.postman_environment.json
