@@ -33,7 +33,7 @@ const postSchedule = async (req, res) => {
     const result = await addSchedule({ schedule, dateTime, userId });
 
     return response({
-      statusCode: 200,
+      statusCode: 201,
       status: 'success',
       message: 'Schedule berhasil ditambahkan',
       data: {

@@ -203,6 +203,7 @@ Method : POST
 }
 ```
 
+
 ```
 {
   schedule: 'Rapat BEM',
@@ -247,7 +248,7 @@ Ketika body request kosong
 
 **Response Success**
 
-- status code : 200
+- status code : 201
 
 ```
 {

@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
-    "lint": "eslint ./src --ext .js"
+    "lint": "eslint ./src --ext .js",
+    "test": " newman run ./postman_testing/jadwalplus-api.postman_collection.json --environment ./postman_testing/jadwalplus-api.postman_environment.json"
   },
   "keywords": [],
   "author": "",
@@ -24,7 +25,8 @@
     "joi": "^17.11.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.0.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "newman": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "^8.53.0",
