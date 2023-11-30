@@ -1,7 +1,8 @@
-import bcrypt from 'bcrypt';
-import { getUserById, updatedUserPasswordById } from '../../services/user/UserService.js';
+import { getUserById, verifyOldPassword, updatedUserPasswordById } from '../../services/user/UserService.js';
 import response from '../../helpers/response.js';
 import { changeUserPasswordSchema } from '../../helpers/validator/schema.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import ClientError from '../../exceptions/ClientError.js';
 
 const changeUserPassword = async (req, res) => {
   try {
@@ -11,46 +12,12 @@ const changeUserPassword = async (req, res) => {
     const validationResult = changeUserPasswordSchema.validate({ oldPassword, newPassword });
 
     if (validationResult.error) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: validationResult.error.message,
-        res,
-      });
+      throw new InvariantError(validationResult.error.message);
     }
 
     const foundUser = await getUserById(userId);
-
-    if (!foundUser) {
-      return response({
-        statusCode: 404,
-        status: 'fail',
-        message: 'User tidak ditemukan',
-        res,
-      });
-    }
-
-    const isOldPasswordSame = await bcrypt.compare(oldPassword, foundUser.password);
-
-    if (!isOldPasswordSame) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: 'Gagal ubah Password. Password lama tidak cocok',
-        res,
-      });
-    }
-
-    const updatedPassword = await updatedUserPasswordById(userId, newPassword);
-
-    if (!updatedPassword.modifiedCount) {
-      return response({
-        statusCode: 404,
-        status: 'fail',
-        message: 'User tidak ditemukan',
-        res,
-      });
-    }
+    await verifyOldPassword(oldPassword, foundUser.password);
+    await updatedUserPasswordById(userId, newPassword);
 
     return response({
       statusCode: 200,
@@ -59,10 +26,19 @@ const changeUserPassword = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 401,
-      status: 'fail',
-      message: error.message,
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }

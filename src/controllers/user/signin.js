@@ -1,45 +1,22 @@
-import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import response from '../../helpers/response.js';
-import { getUserByEmail } from '../../services/user/UserService.js';
+import { getUserByEmail, verifyPassword } from '../../services/user/UserService.js';
 import { signinSchema } from '../../helpers/validator/schema.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import ClientError from '../../exceptions/ClientError.js';
 
 const signin = async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const validationResult = signinSchema.validate({ email, password });
 
     if (validationResult.error) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: validationResult.error.message,
-        res,
-      });
+      throw new InvariantError(validationResult.error.message);
     }
 
     const foundUser = await getUserByEmail(email);
 
-    if (!foundUser) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: 'Gagal masuk. Email atau Password salah',
-        res,
-      });
-    }
-
-    const isPasswordMatch = await bcrypt.compare(password, foundUser.password);
-
-    if (!isPasswordMatch) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: 'Gagal masuk. Email atau Password salah',
-        res,
-      });
-    }
+    await verifyPassword(password, foundUser.password);
 
     const user = { userId: foundUser.id };
     const accessToken = jwt.sign(user, process.env.SECRET_ACCESS_TOKEN);
@@ -54,10 +31,19 @@ const signin = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 400,
-      status: 'fail',
-      message: error.message,
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }

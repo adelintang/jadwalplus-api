@@ -1,44 +1,20 @@
-import { getUserByEmail, getUserByUsername, addUser } from '../../services/user/UserService.js';
+import { findDuplicateUserByEmail, findDuplicateUserByUsername, addUser } from '../../services/user/UserService.js';
 import response from '../../helpers/response.js';
 import { signupSchema } from '../../helpers/validator/schema.js';
+import ClientError from '../../exceptions/ClientError.js';
+import InvariantError from '../../exceptions/InvariantError.js';
 
 const signup = async (req, res) => {
   try {
     const { email, username, password } = req.body;
-
     const validationResult = signupSchema.validate({ email, username, password });
 
     if (validationResult.error) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: validationResult.error.message,
-        res,
-      });
+      throw new InvariantError(validationResult.error.message);
     }
 
-    const foundDuplicatEmail = await getUserByEmail(email);
-
-    if (foundDuplicatEmail) {
-      return response({
-        statusCode: 409,
-        status: 'fail',
-        message: 'Gagal mendaftar. Email sudah digunakan',
-        res,
-      });
-    }
-
-    const foundDuplicateUsername = await getUserByUsername(username);
-
-    if (foundDuplicateUsername) {
-      return response({
-        statusCode: 409,
-        status: 'fail',
-        message: 'Gagal mendaftar. Username sudah digunakan',
-        res,
-      });
-    }
-
+    await findDuplicateUserByEmail(email);
+    await findDuplicateUserByUsername(username);
     await addUser({ email, username, password });
 
     return response({
@@ -48,10 +24,19 @@ const signup = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 400,
-      status: 'fail',
-      message: error.message,
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }

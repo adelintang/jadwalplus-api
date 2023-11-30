@@ -1,21 +1,22 @@
 import { deleteUserById } from '../../services/user/UserService.js';
 import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
+import ClientError from '../../exceptions/ClientError.js';
 
 const deleteUser = async (req, res) => {
   try {
     const { userId } = req.user;
 
-    const user = await deleteUserById(userId);
+    await deleteUserById(userId);
 
-    if (user.deletedCount === 0) {
-      return response({
-        statusCode: 404,
-        status: 'fail',
-        message: 'User tidak ditemukan',
-        res,
-      });
-    }
+    // if (user.deletedCount === 0) {
+    //   return response({
+    //     statusCode: 404,
+    //     status: 'fail',
+    //     message: 'User tidak ditemukan',
+    //     res,
+    //   });
+    // }
 
     await Schedules.deleteMany({ userId });
 
@@ -26,10 +27,19 @@ const deleteUser = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 401,
-      status: 'fail',
-      message: error.message,
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }
