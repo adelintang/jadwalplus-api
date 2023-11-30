@@ -8,16 +8,6 @@ const deleteUser = async (req, res) => {
     const { userId } = req.user;
 
     await deleteUserById(userId);
-
-    // if (user.deletedCount === 0) {
-    //   return response({
-    //     statusCode: 404,
-    //     status: 'fail',
-    //     message: 'User tidak ditemukan',
-    //     res,
-    //   });
-    // }
-
     await Schedules.deleteMany({ userId });
 
     return response({

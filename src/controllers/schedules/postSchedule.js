@@ -1,33 +1,26 @@
 import response from '../../helpers/response.js';
-import Users from '../../models/users.js';
 import { scheduleSchema } from '../../helpers/validator/schema.js';
 import { addSchedule } from '../../services/schedules/schedules.js';
+import InvariantError from '../../exceptions/InvariantError.js';
+import ClientError from '../../exceptions/ClientError.js';
+import AuthorizationError from '../../exceptions/AuthorizationError.js';
+import { getUserById } from '../../services/user/UserService.js';
 
 const postSchedule = async (req, res) => {
   try {
     const { userId } = req.user;
     const { schedule, dateTime } = req.body;
 
-    const user = await Users.findById(userId);
+    const user = await getUserById(userId);
 
     if (user?.id !== userId) {
-      return response({
-        statusCode: 403,
-        status: 'fail',
-        message: 'Akses tidak diperbolehkan',
-        res,
-      });
+      throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
     const validationResult = scheduleSchema.validate({ schedule, dateTime });
 
     if (validationResult.error) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: validationResult.error.message,
-        res,
-      });
+      throw new InvariantError(validationResult.error.message);
     }
 
     const result = await addSchedule({ schedule, dateTime, userId });
@@ -48,10 +41,19 @@ const postSchedule = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 400,
-      status: 'fail',
-      message: error.message,
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }

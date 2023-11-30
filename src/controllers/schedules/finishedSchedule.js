@@ -1,32 +1,26 @@
-import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
-import Users from '../../models/users.js';
+import ClientError from '../../exceptions/ClientError.js';
+import AuthorizationError from '../../exceptions/AuthorizationError.js';
+import { getUserById } from '../../services/user/UserService.js';
+import { setFinishedScheduleById } from '../../services/schedules/schedules.js';
 
 const finishedSchedule = async (req, res) => {
   try {
     const { userId } = req.user;
     const { id } = req.params;
 
-    const user = await Users.findById(userId);
+    const user = await getUserById(userId);
 
     if (user?.id !== userId) {
-      return response({
-        statusCode: 403,
-        status: 'fail',
-        message: 'Akses tidak diperbolehkan',
-        res,
-      });
+      throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
-    const validScheduleUser = await Schedules.findOne({ _id: id, userId });
+    // const validScheduleUser = await Schedules.findOne({ _id: id, userId });
+    // if (!validScheduleUser) {
+    //   throw Error();
+    // }
 
-    if (!validScheduleUser) {
-      throw Error();
-    }
-
-    const schedule = await Schedules.findByIdAndUpdate(id, {
-      $set: { finished: true },
-    }, { new: true });
+    const schedule = await setFinishedScheduleById(id);
 
     return response({
       statusCode: 200,
@@ -37,10 +31,19 @@ const finishedSchedule = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 404,
-      status: 'fail',
-      message: 'Schedule tidak ditemukan',
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }
