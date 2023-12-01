@@ -1,8 +1,10 @@
-import Schedules from '../../models/schedules.js';
 import response from '../../helpers/response.js';
-import Users from '../../models/users.js';
 import { scheduleSchema } from '../../helpers/validator/schema.js';
 import { updatedScheduleById } from '../../services/schedules/schedules.js';
+import { getUserById } from '../../services/user/UserService.js';
+import ClientError from '../../exceptions/ClientError.js';
+import AuthorizationError from '../../exceptions/AuthorizationError.js';
+import InvariantError from '../../exceptions/InvariantError.js';
 
 const updateSchedule = async (req, res) => {
   try {
@@ -10,32 +12,21 @@ const updateSchedule = async (req, res) => {
     const { id } = req.params;
     const { schedule, dateTime } = req.body;
 
-    const user = await Users.findById(userId);
+    const user = await getUserById(userId);
 
     if (user?.id !== userId) {
-      return response({
-        statusCode: 403,
-        status: 'fail',
-        message: 'Akses tidak diperbolehkan',
-        res,
-      });
+      throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
-    const validScheduleUser = await Schedules.findOne({ _id: id, userId });
-
-    if (!validScheduleUser) {
-      throw Error();
-    }
+    // const validScheduleUser = await Schedules.findOne({ _id: id, userId });
+    // if (!validScheduleUser) {
+    //   throw Error();
+    // }
 
     const validationResult = scheduleSchema.validate({ schedule, dateTime });
 
     if (validationResult.error) {
-      return response({
-        statusCode: 400,
-        status: 'fail',
-        message: validationResult.error.message,
-        res,
-      });
+      throw new InvariantError(validationResult.error.message);
     }
 
     const updatedSchedule = await updatedScheduleById({ id, schedule, dateTime });
@@ -56,10 +47,19 @@ const updateSchedule = async (req, res) => {
       res,
     });
   } catch (error) {
+    if (error instanceof ClientError) {
+      return response({
+        statusCode: error.statusCode,
+        status: 'fail',
+        message: error.message,
+        res,
+      });
+    }
+
     return response({
-      statusCode: 404,
-      status: 'fail',
-      message: 'Schedule tidak ditemukan',
+      statusCode: 500,
+      status: 'error',
+      message: 'Internal Server Error',
       res,
     });
   }

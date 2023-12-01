@@ -46,15 +46,6 @@ const findScheduleById = async (id) => {
 };
 
 const setFinishedScheduleById = async (id) => {
-  // const schedule = await Schedules.findByIdAndUpdate(id, {
-  //   $set: { finished: true },
-  // }, { new: true });
-
-  // if (schedule === null) {
-  //   throw new NotFoundError('Schedule tidak ditemukan');
-  // }
-
-  // return schedule;
   try {
     const schedule = await Schedules.findByIdAndUpdate(id, {
       $set: { finished: true },
@@ -70,17 +61,39 @@ const setFinishedScheduleById = async (id) => {
   }
 };
 
-// belum kepake
+const verifyScheduleOwner = async (scheduleId, userId) => {
+  const result = await Schedules.findOne({ _id: scheduleId, userId });
+  return result;
+};
+
 const updatedScheduleById = async ({ id, schedule, dateTime }) => {
-  const updatedSchedule = await Schedules.findByIdAndUpdate(id, {
-    $set: { schedule, dateTime },
-  }, { new: true });
+  try {
+    const updatedSchedule = await Schedules.findByIdAndUpdate(id, {
+      $set: { schedule, dateTime },
+    }, { new: true });
 
-  if (!updatedSchedule) {
-    throw new Error();
+    if (updatedSchedule === null) {
+      throw new NotFoundError('Schedule tidak ditemukan');
+    }
+
+    return updatedSchedule;
+  } catch (error) {
+    throw new NotFoundError('Schedule tidak ditemukan');
   }
+};
 
-  return updatedSchedule;
+const deleteScheduleById = async (id) => {
+  try {
+    const schedule = await Schedules.findByIdAndDelete(id);
+
+    if (schedule === null) {
+      throw new NotFoundError('Schedule tidak ditemukan');
+    }
+
+    return schedule.id;
+  } catch (error) {
+    throw new NotFoundError('Schedule tidak ditemukan');
+  }
 };
 
 export {
@@ -90,4 +103,6 @@ export {
   findSchedulesByUserIdAndSearch,
   findScheduleById,
   setFinishedScheduleById,
+  verifyScheduleOwner,
+  deleteScheduleById,
 };
