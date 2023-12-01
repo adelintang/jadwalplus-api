@@ -16,16 +16,6 @@ const getAllSchedules = async (req, res) => {
       throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
-    // const validScheduleUser = await findSchedulesByUserId(userId);
-    // if (!validScheduleUser) {
-    //   return response({
-    //     statusCode: 403,
-    //     status: 'fail',
-    //     message: 'Akses tidak diperbolehkan',
-    //     res,
-    //   });
-    // }
-
     if (search) {
       const query = new RegExp(search, 'i');
       const searchSchedulesDB = await findSchedulesByUserIdAndSearch(query, userId);

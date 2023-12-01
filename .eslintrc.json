@@ -14,6 +14,7 @@
         "linebreak-style": "off",
         "import/no-extraneous-dependencies": "off",
         "no-console": "off",
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "consistent-return": "off"
     }
 }

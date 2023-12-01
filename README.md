@@ -1,8 +1,6 @@
 ## TODO Ongoing
 
-- memisahkan dependensi service ke database
-- membuat middleware isOwner
-- menyempurnakan testing
+- menyempurnakan testing (hak akses)
 - dokumentasi api (swagger)
 - automation ci/cd
 - implementasi docker

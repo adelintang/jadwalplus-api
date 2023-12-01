@@ -15,11 +15,6 @@ const deleteSchedule = async (req, res) => {
       throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
-    // const validScheduleUser = await Schedules.findOne({ _id: id, userId });
-    // if (!validScheduleUser) {
-    //   throw Error();
-    // }
-
     const scheduleId = await deleteScheduleById(id);
 
     return response({

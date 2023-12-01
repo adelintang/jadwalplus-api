@@ -18,11 +18,6 @@ const updateSchedule = async (req, res) => {
       throw new AuthorizationError('Akses tidak diperbolehkan');
     }
 
-    // const validScheduleUser = await Schedules.findOne({ _id: id, userId });
-    // if (!validScheduleUser) {
-    //   throw Error();
-    // }
-
     const validationResult = scheduleSchema.validate({ schedule, dateTime });
 
     if (validationResult.error) {
