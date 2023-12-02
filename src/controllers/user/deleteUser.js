@@ -1,5 +1,5 @@
 import { deleteUserById } from '../../services/user/UserService.js';
-import Schedules from '../../models/schedules.js';
+import { deleteManySchedule } from '../../services/schedules/schedules.js';
 import response from '../../helpers/response.js';
 import ClientError from '../../exceptions/ClientError.js';
 
@@ -8,7 +8,7 @@ const deleteUser = async (req, res) => {
     const { userId } = req.user;
 
     await deleteUserById(userId);
-    await Schedules.deleteMany({ userId });
+    await deleteManySchedule(userId);
 
     return response({
       statusCode: 200,

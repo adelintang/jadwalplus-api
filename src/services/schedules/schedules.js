@@ -96,6 +96,18 @@ const deleteScheduleById = async (id) => {
   }
 };
 
+const deleteManySchedule = async (userId) => {
+  try {
+    const schedule = await Schedules.deleteMany({ userId });
+
+    if (schedule === null) {
+      throw new NotFoundError('Schedule tidak ditemukan');
+    }
+  } catch (error) {
+    throw new NotFoundError('Schedule tidak ditemukan');
+  }
+};
+
 export {
   addSchedule,
   updatedScheduleById,
@@ -105,4 +117,5 @@ export {
   setFinishedScheduleById,
   verifyScheduleOwner,
   deleteScheduleById,
+  deleteManySchedule,
 };
