@@ -56,6 +56,24 @@
 *         message:
 *           type: string
 *           example: any message for bad payload
+*     badAuthenticationResponse:
+*       type: object
+*       properties:
+*         status:
+*           type: string
+*           example: fail
+*         message:
+*           type: string
+*           example: any message for authentication error
+*     userNotFoundError:
+*       type: object
+*       properties:
+*         status:
+*           type: string
+*           example: fail
+*         message:
+*           type: string
+*           example: User not found
 */
 
 /**
@@ -159,6 +177,136 @@
 *                   example: Gagal masuk. Email atau Password salah
 *       400:
 *         description: The bad body payload
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/badPayloadResponse'
+*/
+
+/**
+* @swagger
+* /api/v1/user:
+*   get:
+*     summary: Return user data authenticate
+*     tags: [User]
+*     responses:
+*       200:
+*         description: User data authenticate
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 status:
+*                   type: string
+*                   example: success
+*                 data:
+*                   type: object
+*                   properties:
+*                     user:
+*                       type: object
+*                       properties:
+*                         email:
+*                           type: string
+*                           example: example@gmail.com
+*                         username:
+*                           type: string
+*                           example: exampleuser
+*       401:
+*         description: Auhtentication error
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/badAuthenticationResponse'
+*       404:
+*         description: User not found
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/userNotFoundError'
+*/
+
+/**
+* @swagger
+* /api/v1/user:
+*   delete:
+*     summary: Delete user account
+*     tags: [User]
+*     responses:
+*       200:
+*         description: Delete account
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 status:
+*                   type: string
+*                   example: success
+*                 message:
+*                   type: string
+*                   example: User berhasil dihapus
+*       401:
+*         description: Authentication error
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/badAuthenticationResponse'
+*       404:
+*         description: User not found
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/userNotFoundError'
+*/
+
+/**
+* @swagger
+* /api/v1/user:
+*   patch:
+*     summary: Update User Password
+*     tags: [User]
+*     requestBody:
+*       required: true
+*       content:
+*         application/json:
+*           schema:
+*             type: object
+*             properties:
+*               oldPassword:
+*                 type: string
+*                 example: example123
+*               newPassword:
+*                 type: string
+*                 example: example345
+*     responses:
+*       200:
+*         description: Update success
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 status:
+*                   type: string
+*                   example: success
+*                 message:
+*                   type: string
+*                   example: Password berhasil dihapus
+*       401:
+*         description: Authentication error
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/badAuthenticationResponse'
+*       404:
+*         description: User not found
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/userNotFoundError'
+*       400:
+*         description: Bad body payload
 *         content:
 *           application/json:
 *             schema:
