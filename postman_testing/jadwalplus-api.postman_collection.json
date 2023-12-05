@@ -2983,6 +2983,8 @@
 									"   pm.expect(data).to.be.an('object');\r",
 									"   pm.expect(data).to.ownProperty('id');\r",
 									"   pm.expect(data.id).to.be.a('string');\r",
+									"   pm.expect(data).to.ownProperty('finished');\r",
+									"   pm.expect(data.finished).to.be.a('boolean');\r",
 									"}); "
 								],
 								"type": "text/javascript"
@@ -4808,6 +4810,8 @@
 									"   pm.expect(data).to.be.an('object');\r",
 									"   pm.expect(data).to.ownProperty('id');\r",
 									"   pm.expect(data.id).to.be.a('string');\r",
+									"   pm.expect(data).to.ownProperty('finished');\r",
+									"   pm.expect(data.finished).to.be.a('boolean');\r",
 									"}); "
 								],
 								"type": "text/javascript"

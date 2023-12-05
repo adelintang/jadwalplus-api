@@ -203,7 +203,6 @@ Method : POST
 }
 ```
 
-
 ```
 {
   schedule: 'Rapat BEM',
@@ -389,6 +388,7 @@ Ketika schedule tidak ada
   status: 'success',
   data: {
     id: 'jhsdhj6328747fhhf'
+    finished: true,
   }
 }
 ```

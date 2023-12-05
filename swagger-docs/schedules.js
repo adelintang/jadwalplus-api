@@ -226,6 +226,9 @@
 *                     id:
 *                       type: string
 *                       example: jhsdhj6328747fhhf
+*                     finished:
+*                       type: boolean
+*                       example: true
 *       401:
 *         description: Authentication error
 *         content:

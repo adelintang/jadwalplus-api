@@ -3,7 +3,7 @@ import InvariantError from '../../exceptions/InvariantError.js';
 import NotFoundError from '../../exceptions/NotFoundError.js';
 
 const addSchedule = async ({ schedule, dateTime, userId }) => {
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString();
 
   const data = new Schedules({
     schedule,
@@ -47,8 +47,9 @@ const findScheduleById = async (id) => {
 
 const setFinishedScheduleById = async (id) => {
   try {
+    const foundSchedule = await findScheduleById(id);
     const schedule = await Schedules.findByIdAndUpdate(id, {
-      $set: { finished: true },
+      $set: { finished: !foundSchedule.finished },
     }, { new: true });
 
     if (schedule === null) {

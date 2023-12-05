@@ -22,6 +22,7 @@ const finishedSchedule = async (req, res) => {
       status: 'success',
       data: {
         id: schedule.id,
+        finished: schedule.finished,
       },
       res,
     });
