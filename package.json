@@ -7,6 +7,9 @@
   "directories": {
     "doc": "doc"
   },
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "start": "node ./src/index.js",
     "dev": "nodemon ./src/index.js",
