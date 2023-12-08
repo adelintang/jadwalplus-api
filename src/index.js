@@ -9,8 +9,8 @@ import connectMongoDB from './config/config.js';
 import userRouter from './routes/user.js';
 import scheduleRouter from './routes/schedules.js';
 
+const { PORT } = process.env;
 const app = express();
-const PORT = 5000;
 
 const options = {
   definition: {
