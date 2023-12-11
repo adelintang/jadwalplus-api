@@ -22,7 +22,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:5000',
+        url: 'https://api-jadwalplus-production.up.railway.app/',
       },
     ],
   },
@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use('/jadwalplus-api-doc', swaggerUI.serve, swaggerUI.setup(specs));
+app.use('/', swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use('/api/v1', userRouter);
 app.use('/api/v1/schedules', scheduleRouter);
