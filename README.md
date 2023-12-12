@@ -64,3 +64,17 @@ Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.
   ```
   npm run dev
   ```
+
+### Cara menjalankan menggunakan docker
+
+- Pull image dari GHCR
+
+  ```
+  docker pull ghcr.io/mengcapstone/jadwalplus-api:latest
+  ```
+
+- Run image
+
+```
+docker run -dp 5000:5000 -it ghcr.io/mengcapstone/jadwalplus-api:latest
+```
