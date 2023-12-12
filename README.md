@@ -76,5 +76,5 @@ Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.
 - Run image
 
   ```
-  docker run -e MONGO_URL='Your Mongo URL' -e SECRET_ACCESS_TOKEN='Your Secret Access Token' -e PORT='5000' -dp 5000:5000 -it ghcr.io/mengcapstone/jadwalplus-api:latest
+  docker run -e MONGO_URL='Your Mongo URL' -e SECRET_ACCESS_TOKEN='Your Secret Access Token' -e PORT='5000' -dp 5001:5000 -it ghcr.io/mengcapstone/jadwalplus-api:latest
   ```
