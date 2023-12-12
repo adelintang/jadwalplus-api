@@ -47,7 +47,7 @@ Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.
 - Install Mongo DB
 
   [mongodb](https://www.mongodb.com/try/download/community)
-- Masuk directory project, kemudian install dependencies
+- Masuk directory project, kemudian install dependencies.
 
   ```
   npm install
