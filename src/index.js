@@ -36,7 +36,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use('/', swaggerUI.serve, swaggerUI.setup(specs));
+app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use('/api/v1', userRouter);
 app.use('/api/v1/schedules', scheduleRouter);
