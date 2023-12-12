@@ -11,8 +11,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "pm2 start ./src/index.js",
-    "logs": "pm2 logs",
+    "start": "pm2 start ./src/index.js --merge-logs && pm2 logs",
     "stop": "pm2 stop ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint ./src --ext .js",

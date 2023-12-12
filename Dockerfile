@@ -13,11 +13,8 @@ RUN npm install
 # Salin seluruh proyek ke direktori kerja
 COPY . .
 
-# Menjalankan aplikasi
-RUN npm run start
-
 # Expose container port
 EXPOSE 5000
 
 # Perintah untuk menjalankan aplikasi ketika container dijalankan
-CMD ["npm", "run", "logs"]
+CMD ["npm", "run", "start"]
