@@ -11,7 +11,9 @@
     "node": "18.x"
   },
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "pm2 start ./src/index.js",
+    "logs": "pm2 logs",
+    "stop": "pm2 stop ./src/index.js",
     "dev": "nodemon ./src/index.js",
     "lint": "eslint ./src --ext .js",
     "test": " newman run ./postman_testing/jadwalplus-api.postman_collection.json --environment ./postman_testing/jadwalplus-api.postman_environment.json"
@@ -30,6 +32,7 @@
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
     "newman": "^6.0.0",
+    "pm2": "^5.3.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },
