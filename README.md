@@ -2,7 +2,7 @@
 
 Sebuah API yang melayani pengelolaan data penjadwalan secara online.
 
-Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.app/)
+Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.app/docs)
 
 ### Fitur yang ditawarkan
 
@@ -75,6 +75,6 @@ Dokumentasi API : [JadwalPlus API](https://api-jadwalplus-production.up.railway.
 
 - Run image
 
-```
-docker run -dp 5000:5000 -it ghcr.io/mengcapstone/jadwalplus-api:latest
-```
+  ```
+  docker run -dp 5000:5000 -it ghcr.io/mengcapstone/jadwalplus-api:latest
+  ```
