@@ -32,7 +32,7 @@ const getUserByEmail = async (email) => {
   const user = await Users.findOne({ email });
 
   if (!user) {
-    throw new InvariantError('Gagal masuk. Email atau Password salah');
+    throw new InvariantError('Email tidak terdaftar');
   }
 
   return user;
@@ -61,12 +61,6 @@ const verifyOldPassword = async (password, hashedPassword) => {
     throw new InvariantError('Gagal ubah Password. Password lama tidak cocok');
   }
 };
-
-// // belum tentu di pakai
-// const getUserByUsername = async (username) => {
-//   const user = await Users.findOne({ username });
-//   return user;
-// };
 
 const findDuplicateUserByUsername = async (username) => {
   const user = await Users.findOne({ username });
@@ -102,7 +96,6 @@ export {
   addUser,
   getUserById,
   getUserByEmail,
-  // getUserByUsername,
   updatedUserPasswordById,
   deleteUserById,
   findDuplicateUserByEmail,
