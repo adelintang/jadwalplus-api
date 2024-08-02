@@ -48,5 +48,3 @@ app.use('/api/v1/schedules', scheduleRouter);
 app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 app.listen(PORT, () => console.log(`Server running on port:${PORT}`));
-
-export default app;
