@@ -36,15 +36,22 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-app.use('/', (req, res) => {
+app.use('/api/v1', userRouter);
+app.use('/api/v1/schedules', scheduleRouter);
+app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(specs));
+
+app.get('/', (req, res) => {
   res.json({
     status: 'success',
     message: 'Welcome to JadwalPlus Api',
   });
 });
 
-app.use('/api/v1', userRouter);
-app.use('/api/v1/schedules', scheduleRouter);
-app.use('/api/v1/docs', swaggerUI.serve, swaggerUI.setup(specs));
+app.use('*', (req, res) => {
+  res.status(404).json({
+    status: 'fail',
+    message: 'Endpoint Not Found',
+  });
+});
 
 app.listen(PORT, () => console.log(`Server running on port:${PORT}`));
