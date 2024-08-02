@@ -42,3 +42,6 @@ app.use('/api/v1', userRouter);
 app.use('/api/v1/schedules', scheduleRouter);
 
 app.listen(PORT, () => console.log(`Server running on port:${PORT}`));
+
+// Export the Express API
+export default app;
