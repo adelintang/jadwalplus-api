@@ -36,6 +36,12 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
+app.use('/', (req, res) => {
+  res.json({
+    status: 'success',
+    message: 'Welcome to JadwalPlus Api',
+  });
+});
 app.use('/docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 app.use('/api/v1', userRouter);
